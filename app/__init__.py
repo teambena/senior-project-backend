@@ -82,6 +82,7 @@ from .controllers.components_data import  Components_Data_blueprint
 from .controllers.fileuploader import File_Uploader_blueprint
 from .controllers.auth import Auth_blueprint
 from .controllers.account import Account_blueprint
+from .controllers.customer import Customer_blueprint
 from .controllers.manager import Manager_blueprint
 
 
@@ -91,4 +92,5 @@ app.register_blueprint(Components_Data_blueprint, url_prefix = "/api/components_
 app.register_blueprint(File_Uploader_blueprint, url_prefix = "/api/fileuploader")
 app.register_blueprint(Auth_blueprint, url_prefix = "/api/auth")
 app.register_blueprint(Account_blueprint, url_prefix = "/api/account")
+app.register_blueprint(Customer_blueprint, url_prefix = "/api/customer")
 app.register_blueprint(Manager_blueprint, url_prefix = "/api/manager")

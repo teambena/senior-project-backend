@@ -5,7 +5,6 @@ from wtforms.validators import *
 
 class Manager(db.Model):
     __tablename__ = 'Manager'
-    manager_id = db.Column("manager_id", db.Integer, primary_key=True, autoincrement=True)
     name = db.Column("name", db.String)
     username = db.Column("username", db.String)
     email = db.Column("email", db.String)
@@ -14,6 +13,7 @@ class Manager(db.Model):
     business_phone_number = db.Column("business_phone_number", db.Integer)
     business_address = db.Column("business_address", db.String)
     credit = db.Column("credit", db.Integer)
+    manager_id = db.Column("manager_id", db.Integer, primary_key=True, autoincrement=True)
 
     def has_verified_email(self):
         if self.email_verified_at is None:
