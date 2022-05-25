@@ -29,6 +29,7 @@ def index(fieldname=None, fieldvalue=None):
                 Customer.customer_email.like(f'%{search}%') | 
                 Customer.uid.like(f'%{search}%') 
             )
+        query = query.filter(Customer.uid == current_user.manager_id)
         
         # filter by dynamic field name
         if fieldname:
@@ -78,6 +79,7 @@ def index(fieldname=None, fieldvalue=None):
 def view(rec_id=None):
     try:
         query = Customer.query
+        query = query.filter(Customer.uid == current_user.manager_id)
         query = query.filter(Customer.customer_id == rec_id)
         query = query.with_entities(
             Customer.customer_id,
@@ -117,6 +119,7 @@ def add():
         
         record = Customer()
         form.populate_obj(record)
+        record.uid = current_user.manager_id
         
         # save customer records
         db.session.add(record)
@@ -137,6 +140,7 @@ def edit(rec_id=None):
     try:
         query = Customer.query
         query = query.filter(Customer.customer_id == rec_id)
+        query = query.filter(Customer.uid == current_user.manager_id)
         record = query.first()
         if not record: return ResourceNotFound()
         
@@ -169,6 +173,7 @@ def delete(rec_id):
     query = Customer.query
     arr_id = rec_id.split(',')
     try:
+        query = query.filter(Customer.uid == current_user.manager_id)
         query = query.filter(Customer.customer_id.in_(arr_id))
         query.delete(synchronize_session=False)
         db.session.commit()
