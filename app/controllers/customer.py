@@ -26,7 +26,8 @@ def index(fieldname=None, fieldvalue=None):
         if search:
             query = query.filter(
                 Customer.customer_name.like(f'%{search}%') | 
-                Customer.customer_email.like(f'%{search}%') 
+                Customer.customer_email.like(f'%{search}%') | 
+                Customer.uid.like(f'%{search}%') 
             )
         
         # filter by dynamic field name
@@ -39,14 +40,16 @@ def index(fieldname=None, fieldvalue=None):
         if orderby:
             query = query.order_by(text(f'{orderby} {ordertype}'))
         else:
-            query = query.order_by(text(f'Customer.customer_id {ordertype}'))
+            order = text('Customer.customer_name ASC')
+            query = query.order_by(order)
         
         # fields to select
         query = query.with_entities(
             Customer.customer_id,
             Customer.customer_name,
+            Customer.customer_email,
             Customer.customer_phone_number,
-            Customer.customer_email
+            Customer.uid
         )
         page = int(request.args.get('page', 1))
         limit = int(request.args.get('limit', MAX_RECORD_COUNT))
@@ -79,8 +82,9 @@ def view(rec_id=None):
         query = query.with_entities(
             Customer.customer_id,
             Customer.customer_name,
+            Customer.customer_email,
             Customer.customer_phone_number,
-            Customer.customer_email
+            Customer.uid
         )
         
         record = query.first()
