@@ -35,4 +35,3 @@ class AppointmentEditForm(Form):
     end_date = StringField('End Date', [])
     end_time = StringField('End Time', [])
     description = StringField('Description', [])
-    uid = StringField('Uid', [])

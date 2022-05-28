@@ -28,6 +28,7 @@ def index(fieldname=None, fieldvalue=None):
                 Appointment.customer.like(f'%{search}%') | 
                 Appointment.start_date.like(f'%{search}%') 
             )
+        query = query.filter(Appointment.uid == current_user.manager_id)
         
         # filter by dynamic field name
         if fieldname:
@@ -79,6 +80,7 @@ def index(fieldname=None, fieldvalue=None):
 def view(rec_id=None):
     try:
         query = Appointment.query
+        query = query.filter(Appointment.uid == current_user.manager_id)
         query = query.filter(Appointment.appointment_id == rec_id)
         query = query.with_entities(
             Appointment.appointment_id,
@@ -121,7 +123,7 @@ def add():
         
         record = Appointment()
         form.populate_obj(record)
-        record.uid = "1"
+        record.uid = current_user.manager_id
         
         # save appointment records
         db.session.add(record)
@@ -142,6 +144,7 @@ def edit(rec_id=None):
     try:
         query = Appointment.query
         query = query.filter(Appointment.appointment_id == rec_id)
+        query = query.filter(Appointment.uid == current_user.manager_id)
         record = query.first()
         if not record: return ResourceNotFound()
         
@@ -174,6 +177,7 @@ def delete(rec_id):
     query = Appointment.query
     arr_id = rec_id.split(',')
     try:
+        query = query.filter(Appointment.uid == current_user.manager_id)
         query = query.filter(Appointment.appointment_id.in_(arr_id))
         query.delete(synchronize_session=False)
         db.session.commit()
