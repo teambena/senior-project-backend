@@ -52,6 +52,7 @@ def index(fieldname=None, fieldvalue=None):
             Appointment.end_date,
             Appointment.end_time,
             Appointment.description,
+            Appointment.status,
             Appointment.uid
         )
         page = int(request.args.get('page', 1))
@@ -91,7 +92,8 @@ def view(rec_id=None):
             Appointment.end_date,
             Appointment.end_time,
             Appointment.description,
-            Appointment.uid
+            Appointment.uid,
+            Appointment.status
         )
         
         record = query.first()
