@@ -40,7 +40,8 @@ def index(fieldname=None, fieldvalue=None):
         if orderby:
             query = query.order_by(text(f'{orderby} {ordertype}'))
         else:
-            query = query.order_by(text(f'Appointment.appointment_id {ordertype}'))
+            order = text('Appointment.start_date ASC')
+            query = query.order_by(order)
         
         # fields to select
         query = query.with_entities(
