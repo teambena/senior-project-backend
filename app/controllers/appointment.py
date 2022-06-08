@@ -1,7 +1,7 @@
 from flask import Blueprint
 from app import *
 from ..models.appointment import *
-
+import requests
 
 Appointment_blueprint = Blueprint('Appointment', __name__)
 
@@ -133,8 +133,22 @@ def add():
         db.session.commit()
         db.session.flush()
         rec_id = record.appointment_id
-         
+
+        # For sending SMS
+        #
+        # url = "https://api-v2.thaibulksms.com/sms"
+        #
+        # payload = "msisdn=0844112191&message=testtest&sender=TBS."
+        # headers = {
+        #     "Accept": "application/json",
+        #     "Content-Type": "application/x-www-form-urlencoded",
+        #     "Authorization": "Basic {API Key}"
+        # }
+        #
+        # print(requests.post(url, data=payload, headers=headers))
+        #
         record = record._asdict()
+
         return jsonify(record)
     except Exception as ex:
         return InternalServerError(ex)
