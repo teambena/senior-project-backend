@@ -49,9 +49,9 @@ def manager_email_exist(value = None):
 
 
 
-@Components_Data_blueprint.route('/linechart_newchart1')
+@Components_Data_blueprint.route('/linechart_customertoday')
 @jwt_required(optional=True)
-def linechart_newchart1():
+def linechart_customertoday():
     try:
         sqltext = text(f"""SELECT  COUNT(Appointment.customer) AS count_of_customer, Appointment.start_date FROM Appointment WHERE uid=:manager_id GROUP BY Appointment.start_date ORDER BY Appointment.start_date ASC""")
         query_params = dict()
