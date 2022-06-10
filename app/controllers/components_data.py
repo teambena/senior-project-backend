@@ -53,7 +53,7 @@ def manager_email_exist(value = None):
 @jwt_required(optional=True)
 def linechart_customertoday():
     try:
-        sqltext = text(f"""SELECT  COUNT(Appointment.customer) AS count_of_customer, Appointment.start_date FROM Appointment WHERE uid=:manager_id GROUP BY Appointment.start_date ORDER BY Appointment.start_date ASC""")
+        sqltext = text(f"""SELECT  COUNT(Appointment.customer) AS count_of_customer, Appointment.start_date FROM Appointment WHERE  (Appointment.start_date  >=datetime('now', '-1 day') ) AND (Appointment.start_date  <=datetime('now', '+8 day') ) GROUP BY Appointment.start_date ORDER BY Appointment.start_date ASC""")
         query_params = dict()
         query_params['manager_id'] = current_user.manager_id;
         arr = db.session.execute(sqltext, query_params)
