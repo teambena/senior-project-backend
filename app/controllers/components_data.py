@@ -48,28 +48,27 @@ def manager_email_exist(value = None):
 
 
 
-# Barchart home page
 
-# @Components_Data_blueprint.route('/barchart_customertoday')
-# @jwt_required(optional=True)
-# def barchart_customertoday():
-#     try:
-#         sqltext = text(f"""SELECT  COUNT(Appointment.customer) AS count_of_customer, Appointment.start_date FROM Appointment WHERE uid=:manager_id GROUP BY Appointment.start_date ORDER BY Appointment.start_date ASC""")
-#         query_params = dict()
-#         query_params['manager_id'] = current_user.manager_id;
-#         arr = db.session.execute(sqltext, query_params)
-#         records = [row for row in arr]
-#         labels = [r["start_date"] for r in records]
-#         datasets = []
-#         dataset = dict(
-#             data = [r["count_of_customer"] for r in records],
-#             label = "Customer today",
-# 			backgroundColor = "rgba(0 , 0 , 128, 0.5)",
-# 			borderColor = "rgba(255 , 255 , 255, 0.5)",
-# 			borderWidth = "",
-#         )
-#         datasets.append(dataset)
-#
-#         return jsonify(dict(labels = labels, datasets = datasets))
-#     except Exception as ex:
-#         return InternalServerError(ex)
+@Components_Data_blueprint.route('/linechart_customertoday')
+@jwt_required(optional=True)
+def linechart_customertoday():
+    try:
+        sqltext = text(f"""SELECT  COUNT(Appointment.customer) AS count_of_customer, Appointment.start_date FROM Appointment WHERE  (Appointment.start_date  >=datetime('now', '-1 day') ) AND (Appointment.start_date  <=datetime('now', '+8 day') ) GROUP BY Appointment.start_date ORDER BY Appointment.start_date ASC""")
+        query_params = dict()
+        query_params['manager_id'] = current_user.manager_id;
+        arr = db.session.execute(sqltext, query_params)
+        records = [row for row in arr]
+        labels = [r["start_date"] for r in records]
+        datasets = []
+        dataset = dict(
+            data = [r["count_of_customer"] for r in records],
+            label = "Customer",
+			backgroundColor = "rgba(0 , 128 , 64, 0.5)", 
+			borderColor = "rgba(0 , 64 , 0, 0.5)", 
+			borderWidth = "8",
+        )
+        datasets.append(dataset)
+        
+        return jsonify(dict(labels = labels, datasets = datasets))
+    except Exception as ex:
+        return InternalServerError(ex)
