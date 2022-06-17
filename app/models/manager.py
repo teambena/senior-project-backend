@@ -61,11 +61,14 @@ class ChangePasswordForm(Form):
 
 
 class ManagerRegisterForm(Form):
+    name = StringField('Name', [])
     username = StringField('Username', [InputRequired()])
     email = StringField('Email', [InputRequired(),Email()])
     password = StringField('Password', [InputRequired()])
     confirm_password = StringField('Confirm password', [InputRequired(), EqualTo('password', message='Passwords confirmation does not match')])
+    business_name = StringField('Business Name', [])
     business_phone_number = FloatField('Business Phone Number', [NumberRange()])
+    business_address = StringField('Business Address', [])
 
 
 class ManagerAccountEditForm(Form):
