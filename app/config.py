@@ -40,16 +40,16 @@ BABEL_DEFAULT_LOCALE = 'en'
 BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 # email configuration default settings
-MAIL_USERNAME = ''
-MAIL_PASSWORD = ''
-MAIL_SERVER = ''
-MAIL_PORT = ''
-MAIL_USE_TLS = False
+MAIL_USERNAME = 'your_email@outlook.com'
+MAIL_PASSWORD = 'your outlook password'
+MAIL_SERVER = 'smtp.office365.com'
+MAIL_PORT = '587'
+MAIL_USE_TLS = True
 MAIL_USE_SSL = False
 MAIL_SUPPRESS_SEND = False
 
 # default email sender details
-MAIL_DEFAULT_SENDER = ''
+MAIL_DEFAULT_SENDER = 'your_email@outlook.com'
 DEFAULT_EMAIL_ACCOUNT_NAME = ''
 USER_EMAIL_SENDER_NAME = ''
 USER_EMAIL_SENDER_EMAIL = ''
