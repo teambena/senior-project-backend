@@ -10,7 +10,7 @@ class Manager(db.Model):
     email = db.Column("email", db.String)
     password = db.Column("password", db.String)
     business_name = db.Column("business_name", db.String)
-    business_phone_number = db.Column("business_phone_number", db.Integer)
+    business_phone_number = db.Column("business_phone_number", db.String)
     business_address = db.Column("business_address", db.String)
     credit = db.Column("credit", db.Integer)
     manager_id = db.Column("manager_id", db.Integer, primary_key=True, autoincrement=True)
@@ -85,13 +85,13 @@ class ManagerAddForm(Form):
     email = StringField('Email', [InputRequired(),Email()])
     password = StringField('Password', [InputRequired()])
     confirm_password = StringField('Confirm password', [InputRequired(), EqualTo('password', message='Passwords confirmation does not match')])
-    business_phone_number = FloatField('Business Phone Number', [NumberRange()])
+    business_phone_number = StringField('Business Phone Number', [])
 
 
 class ManagerEditForm(Form):
     name = StringField('Name', [])
     username = StringField('Username', [OptionalButNotEmpty()])
     business_name = StringField('Business Name', [])
-    business_phone_number = FloatField('Business Phone Number', [NumberRange()])
+    business_phone_number = StringField('Business Phone Number', [])
     business_address = StringField('Business Address', [])
     credit = FloatField('Credit', [NumberRange()])
