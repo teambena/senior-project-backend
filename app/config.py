@@ -10,7 +10,7 @@ PDF_DIR_PATH = os.path.join(APP_STATIC, 'reports')
 DEBUG = True
 SQLALCHEMY_ECHO = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = 'sqlite+pysqlite:///D:\\All git\\atw\\ATW.sqlite'
+SQLALCHEMY_DATABASE_URI = 'sqlite+pysqlite:///E:\\CMU\\953\\Proj499\\teem_project\\ATW.sqlite'
 
 CSRF_ENABLED = True
 

@@ -1,3 +1,6 @@
 __pycache__
 app/__pycache__
 __pycache__
+/venv/
+*.sqlite
+app/config.py
