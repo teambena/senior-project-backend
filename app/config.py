@@ -40,16 +40,16 @@ BABEL_DEFAULT_LOCALE = 'en'
 BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 # email configuration default settings
-MAIL_USERNAME = 'your_email@outlook.com'
-MAIL_PASSWORD = 'your outlook password'
-MAIL_SERVER = 'smtp.office365.com'
+MAIL_USERNAME = 'transmatter.team@outlook.com'
+MAIL_PASSWORD = 'Tmat@1739'
+MAIL_SERVER = 'smtp-mail.outlook.com'
 MAIL_PORT = '587'
 MAIL_USE_TLS = True
 MAIL_USE_SSL = False
-MAIL_SUPPRESS_SEND = False
+# MAIL_SUPPRESS_SEND = False
 
 # default email sender details
-MAIL_DEFAULT_SENDER = 'your_email@outlook.com'
+MAIL_DEFAULT_SENDER = 'transmatter.team@outlook.com'
 DEFAULT_EMAIL_ACCOUNT_NAME = ''
 USER_EMAIL_SENDER_NAME = ''
 USER_EMAIL_SENDER_EMAIL = ''
