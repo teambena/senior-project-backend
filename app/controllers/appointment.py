@@ -1,7 +1,12 @@
+from pprint import pprint
+
 from flask import Blueprint
+from sqlalchemy.orm import session
+
 from app import *
 from .auth import generate_user_token
 from ..models.appointment import *
+from ..models.customer import Customer
 
 Appointment_blueprint = Blueprint('Appointment', __name__)
 
@@ -133,9 +138,10 @@ def add():
         db.session.commit()
         db.session.flush()
         rec_id = record.appointment_id
-
         record = record._asdict()
-        send_notification_email("oat431@gmail.com") # email got from the customer in that appointment
+
+        customer = Customer.query.filter(Customer.customer_name == modeldata['customer']).first()
+        send_notification_email(customer.customer_email)
         return jsonify(record)
     except Exception as ex:
         return InternalServerError(ex)
