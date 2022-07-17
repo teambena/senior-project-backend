@@ -135,25 +135,24 @@ def add():
         rec_id = record.appointment_id
 
         record = record._asdict()
-        send_notification_email(["oat431@gmail.com", "oat431@outlook.com", "sahachan_t@cmu.ac.th"])
+        send_notification_email("oat431@gmail.com") # email got from the customer in that appointment
         return jsonify(record)
     except Exception as ex:
         return InternalServerError(ex)
 
 
-def send_notification_email(emails):
-    for em in emails:
-        user = Manager.query.filter(Manager.email == em).first()
-        if not user:
-            return ResourceNotFound("Email not registered")
-        token = generate_user_token(user)
-        site_addr = app.config['FRONTEND_ADDR']
-        resetlink = f"{site_addr}/#/index/resetpassword?token={token}"
-        username = user.username
-        mailsubject = 'Appointment Notification'
-        template_context = dict(pagetitle='Password reset', username=username, email=email, resetlink=resetlink)
-        mailbody = render_template('pages/index/password_reset_email_template.html', **template_context)
-        utils.send_mail(em, mailsubject, mailbody)
+def send_notification_email(em):
+    user = Manager.query.filter(Manager.email == em).first()
+    if not user:
+        return ResourceNotFound("Email not registered")
+    token = generate_user_token(user)
+    site_addr = app.config['FRONTEND_ADDR']
+    resetlink = f"{site_addr}/#/index/resetpassword?token={token}"
+    username = user.username
+    mailsubject = 'Appointment Notification'
+    template_context = dict(pagetitle='Password reset', username=username, email=email, resetlink=resetlink)
+    mailbody = render_template('pages/index/password_reset_email_template.html', **template_context)
+    utils.send_mail(em, mailsubject, mailbody)
 
 
 # Select record by table primary key and update with form data
