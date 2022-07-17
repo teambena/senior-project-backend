@@ -141,24 +141,17 @@ def add():
         record = record._asdict()
 
         customer = Customer.query.filter(Customer.customer_name == modeldata['customer']).first()
-        send_notification_email(customer.customer_email)
+        send_notification_email(customer.customer_email, customer.customer_name)
         return jsonify(record)
     except Exception as ex:
         return InternalServerError(ex)
 
 
-def send_notification_email(em):
-    user = Manager.query.filter(Manager.email == em).first()
-    if not user:
-        return ResourceNotFound("Email not registered")
-    token = generate_user_token(user)
-    site_addr = app.config['FRONTEND_ADDR']
-    resetlink = f"{site_addr}/#/index/resetpassword?token={token}"
-    username = user.username
-    mailsubject = 'Appointment Notification'
-    template_context = dict(pagetitle='Password reset', username=username, email=email, resetlink=resetlink)
-    mailbody = render_template('pages/index/password_reset_email_template.html', **template_context)
-    utils.send_mail(em, mailsubject, mailbody)
+def send_notification_email(customer_email, customer_name):
+    mailsubject = 'Appointment Confirmation'
+    template_context = dict(pagetitle='Confirm Appointment', customer=customer_name, email=customer_email)
+    mailbody = render_template('pages/index/confirm_appointment_template.html', **template_context)
+    utils.send_mail(customer_email, mailsubject, mailbody)
 
 
 # Select record by table primary key and update with form data
