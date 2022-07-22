@@ -148,8 +148,13 @@ def add():
 
 
 def send_notification_email(customer_email, customer_name):
+    user = Manager.query.filter(Manager.email == current_user.email).first()
+    token = generate_user_token(user)
+    site_addr = app.config['FRONTEND_ADDR']
+    confirmlink = f"{site_addr}/#/index/confirmappointment?token={token}"
+    print(confirmlink)
     mailsubject = 'Appointment Confirmation'
-    template_context = dict(pagetitle='Confirm Appointment', customer=customer_name, email=customer_email)
+    template_context = dict(pagetitle='Confirm Appointment', customer=customer_name, email=customer_email, confirmlink=confirmlink)
     mailbody = render_template('pages/index/confirm_appointment_template.html', **template_context)
     utils.send_mail(customer_email, mailsubject, mailbody)
 
@@ -202,3 +207,10 @@ def delete(rec_id):
         return jsonify(arr_id)
     except Exception as ex:
         return InternalServerError(ex)
+
+# @Appointment_blueprint.route('/comfirmappointment/<rec_id>', methods=['GET', 'POST'])
+# def comfirm_appointment(token, rec_id):
+#
+#
+#     appointment_id = Appointment.query.filter(Appointment.customer == ).first
+#     appointment_id.status = 'Confirmed'
